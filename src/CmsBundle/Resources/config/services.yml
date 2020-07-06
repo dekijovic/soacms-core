@@ -1,0 +1,207 @@
+services:
+    #repositores
+    cms.structure_item.repository:
+        class: CmsBundle\Repository\StructureItemRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:StructureItem'
+
+    cms.structure_locale.repository:
+        class: CmsBundle\Repository\StructureLocaleRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:StructureLocale'
+
+    cms.structure_level.repository:
+        class: CmsBundle\Repository\StructureLevelRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:StructureLevel'
+
+    cms.structure_component.repository:
+        class: CmsBundle\Repository\StructureComponentRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:StructureComponent'
+
+    cms.component_register.repository:
+        class: CmsBundle\Repository\ComponentRegisterRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:ComponentRegister'
+#
+    cms.language.repository:
+        class: CmsBundle\Repository\LanguageRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:Language'
+
+    cms.config.repository:
+        class: CmsBundle\Repository\ConfigRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:Config'
+
+    cms.user.repository:
+        class: CmsBundle\Repository\UserRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:User'
+
+    cms.list.repository:
+        class: CmsBundle\Repository\CmsListRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:CmsList'
+
+    cms.list_type.repository:
+        class: CmsBundle\Repository\CmsListTypeRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:CmsListType'
+
+    cms.web_user.repository:
+        class: CmsBundle\Repository\WebUserRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:WebUser'
+
+    cms.web_user_token.repository:
+        class: CmsBundle\Repository\WebUserTokenRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:WebUserToken'
+
+    cms.user_token.repository:
+        class: CmsBundle\Repository\UserTokenRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:UserToken'
+
+    cms.client_app.repository:
+        class: CmsBundle\Repository\ClientAppRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CmsBundle:ClientApp'
+
+
+    #handlers
+    cms.page.service:
+        class: CmsBundle\Services\PageService
+        arguments:
+            - '@cms.structure_item.repository'
+            - '@cms.structure_locale.repository'
+            - '@cms.structure_level.repository'
+            - '@cms.language.repository'
+            - '@cms.user.repository'
+            - '@cms.image_processor.service'
+
+    cms.register_component.service:
+        class: CmsBundle\Services\RegisterComponentService
+        arguments:
+            - '@cms.component_register.repository'
+            - '@cms.structure_component.repository'
+            - '@cms.structure_item.repository'
+
+    cms.structure_level.service:
+        class: CmsBundle\Services\StructureLevelService
+        arguments:
+            - '@cms.structure_level.repository'
+
+    cms.language.service:
+        class: CmsBundle\Services\LanguageService
+        arguments:
+            - '@cms.language.repository'
+
+    cms.list.service:
+        class: CmsBundle\Services\ListService
+        arguments:
+            - '@cms.list.repository'
+            - '@cms.list_type.repository'
+
+    cms.navigation.service:
+        class: CmsBundle\Services\NavigationService
+        arguments:
+            - '@cms.structure_item.repository'
+            - '@cms.list.service'
+            - '@cms.structure_level.repository'
+
+    cms.image_processor.service:
+        class: CmsBundle\Services\ImageProcessorService
+        arguments: ['%storage_path%']
+
+
+    cms.config.service:
+        class: CmsBundle\Services\ConfigService
+        arguments:
+            - '@cms.config.repository'
+
+    cms.security.service:
+        class: CmsBundle\Services\SecurityService
+        arguments:
+            - '@cms.client_app.repository'
+            - '@cms.web_user_token.repository'
+            - '@cms.user_token.repository'
+            - '@cms.user.repository'
+            - '@cms.web_user.repository'
+            - '@lexik_jwt_authentication.encoder'
+
+
+    #security
+    cms.api_key.authenticator:
+        class: CmsBundle\Security\ApiKeyAuthenticator
+
+    cms.auth_code.authenticator:
+            class: CmsBundle\Security\AuthCodeAuthenticator
+            arguments:
+                - '@lexik_jwt_authentication.encoder'
+                - '@doctrine.orm.default_entity_manager'
+
+    cms.api_web.provider:
+        class: CmsBundle\Security\ApiWebProvider
+
+    cms.api_admin.provider:
+        class: CmsBundle\Security\ApiAdminProvider
+
+    cms.core_jwt.encoder:
+        class: CmsBundle\Security\CoreJwtEncoder
+
+
+    #fixtures
+    cms.user.fixture:
+        class: CmsBundle\DataFixtures\UserFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.language.fixture:
+        class: CmsBundle\DataFixtures\LanguageFixtures
+        tags: [doctrine.fixture.orm]
+    cms.user.fixture:
+        class: CmsBundle\DataFixtures\UserFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.component_register.fixture:
+        class: CmsBundle\DataFixtures\ComponentRegisterFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.config.fixture:
+        class: CmsBundle\DataFixtures\ConfigFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.structure_level.fixture:
+        class: CmsBundle\DataFixtures\StructureLevelFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.structure_item.fixture:
+        class: CmsBundle\DataFixtures\StructureItemFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.slider.fixture:
+        class: CmsBundle\DataFixtures\SliderFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.homepage_promopage.fixture:
+        class: CmsBundle\DataFixtures\HomePagePromopageFixtures
+        tags: [doctrine.fixture.orm]
+
+    cms.http_client.bridge:
+        class: CmsBundle\Bridge\HttpClient

@@ -1,0 +1,56 @@
+content:
+    resource: "@ContentBundle/Controller/"
+    type:     annotation
+    prefix:   api/v1/components
+
+attachment:
+    resource: "@AttachmentBundle/Controller/"
+    type:     annotation
+    prefix:   api/v1/components
+
+ecommerce:
+    resource: "@EcommerceBundle/Controller/"
+    type:     annotation
+    prefix:   /api/v1
+
+calculator:
+    resource: "@CalculatorBundle/Controller/"
+    type:     annotation
+    prefix:   api/v1/components
+
+references:
+    resource: "@ReferencesBundle/Controller/"
+    type:     annotation
+    prefix:   /api/v1/components
+
+homepage_promo_page:
+    resource: "@HomepagePromoPageBundle/Controller/"
+    type:     annotation
+    prefix:   /api/v1/components
+
+homepage_slider:
+    resource: "@HomepageSliderBundle/Controller/"
+    type:     annotation
+    prefix:   /api/v1/components
+
+gallery:
+    resource: "@GalleryBundle/Controller/"
+    type:     annotation
+    prefix:   /api/v1/components
+
+cms:
+    resource: '@CmsBundle/Resources/config/routing.yml'
+    prefix:   /api/v1
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+cms.swagger_ui:
+    resource: "@NelmioApiDocBundle/Resources/config/routing/swaggerui.xml"
+    prefix:   /api/doc
+
+cms.swagger:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }

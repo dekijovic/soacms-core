@@ -1,0 +1,27 @@
+services:
+#    homepage_slider.example:
+#        class: Components\HomepageSliderBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+
+    homepage_slider.component_slider.repository:
+        class: Components\HomepageSliderBundle\Repository\ComponentSliderRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'HomepageSliderBundle:ComponentSlider'
+
+    homepage_slider.component_slider_meta.repository:
+        class: Components\HomepageSliderBundle\Repository\ComponentSliderMetaRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'HomepageSliderBundle:ComponentSliderMeta'
+
+
+    homepage_slider.slider.service:
+        class: Components\HomepageSliderBundle\Service\SliderService
+        arguments:
+            - '@cms.register_component.service'
+            - '@homepage_slider.component_slider.repository'
+            - '@homepage_slider.component_slider_meta.repository'
+            - '@cms.structure_component.repository'
+            - "@cms.image_processor.service"

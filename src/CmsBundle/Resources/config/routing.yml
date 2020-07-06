@@ -1,0 +1,35 @@
+cms_homepage:
+    path:     /
+    defaults: { _controller: CmsBundle:Default:index }
+
+api_cms_pages:
+    type: annotation
+    resource: CmsBundle\Controller\PageController
+
+api_cms_structure_level:
+    type: annotation
+    resource: CmsBundle\Controller\StructureLevelController
+
+api_cms_users:
+    type: annotation
+    resource: CmsBundle\Controller\UserController
+
+api_cms_language:
+    type: annotation
+    resource: CmsBundle\Controller\LanguageController
+
+api_cms_navigation:
+    type: annotation
+    resource: CmsBundle\Controller\NavigationController
+
+api_cms_list:
+    type: annotation
+    resource: CmsBundle\Controller\ListController
+
+api_cms_config:
+    type: annotation
+    resource: CmsBundle\Controller\ConfigController
+
+api_cms_client_app:
+    type: annotation
+    resource: CmsBundle\Controller\ClientAppController

@@ -1,0 +1,44 @@
+<?php
+
+namespace CmsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Page
+ *
+ * @ORM\Table(name="structure_levels")
+ * @ORM\Entity(repositoryClass="CmsBundle\Repository\StructureLevelRepository")
+ */
+class StructureLevel
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="StructureItem", mappedBy="level", indexBy="level_id")
+     */
+    private $structureItem;
+
+}
+

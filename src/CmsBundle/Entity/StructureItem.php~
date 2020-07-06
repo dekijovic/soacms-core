@@ -1,0 +1,106 @@
+<?php
+
+namespace CmsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\MaxDepth;
+
+/**
+ * Page
+ *
+ * @ORM\Table(name="structure_items")
+ * @ORM\Entity(repositoryClass="CmsBundle\Repository\StructureItemRepository")
+ * @ExclusionPolicy("all")
+ */
+class StructureItem
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     * @Expose
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url_name", type="string", length=255)
+     * @Expose
+     */
+    private $urlName;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Expose
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified_at", type="datetime")
+     * @Expose
+     */
+    private $modifiedAt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="created_user_id", type="integer")
+     * @Expose
+     */
+    private $createdUserId;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     * @Expose
+     */
+    private $deletedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="StructureLocale", mappedBy="structureItem", cascade={"ALL"}, indexBy="structure_item_id")
+     * @Expose
+     */
+    private $structureLocale;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="StructureLevel", inversedBy="structureItem")
+     * @Expose
+     */
+    private $level;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="StructureItem")
+     * @ORM\JoinColumn(name="parent_structure_id", referencedColumnName="id")
+     * @Expose
+     * @MaxDepth(2)
+     */
+    private $parentStructure;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="StructureComponent", mappedBy="structureItem", cascade={"ALL"}, indexBy="structure_item_id")
+     * @Expose
+     * @MaxDepth(2)
+     */
+    private $components;
+
+}
+

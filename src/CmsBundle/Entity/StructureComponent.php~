@@ -1,0 +1,53 @@
+<?php
+
+namespace CmsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
+
+/**
+ * StructureComponent
+ *
+ * @ORM\Table(name="structure_component")
+ * @ORM\Entity(repositoryClass="CmsBundle\Repository\StructureComponentRepository")
+ */
+class StructureComponent
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="meta", type="json_array")
+     */
+    private $meta;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="StructureItem" , inversedBy="components")
+     * @ORM\JoinColumn(name="structure_item_id", referencedColumnName="id")
+     * @MaxDepth(2)
+     */
+    private $structureItem;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ComponentRegister" , inversedBy="structureComponents")
+     * @ORM\JoinColumn(name="component_register_id", referencedColumnName="id")
+     * @MaxDepth(2)
+     */
+    private $componentRegister;
+
+}
+

@@ -1,0 +1,40 @@
+<?php
+
+namespace CmsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use CmsBundle\Entity\Page;
+
+/**
+ * Config
+ *
+ * @ORM\Table(name="config")
+ * @ORM\Entity(repositoryClass="CmsBundle\Repository\ConfigRepository")
+ */
+class Config
+{
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="key", type="text" , length=255)
+     */
+    private $key;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="text" , length=255)
+     */
+    private $value;
+
+}

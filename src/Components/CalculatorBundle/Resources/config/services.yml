@@ -1,0 +1,21 @@
+services:
+
+    calculator_prime.calculator.service:
+        class: Components\CalculatorBundle\Service\CalculatorPrimeService
+        arguments:
+            - '@cms.structure_component.repository'
+            - '@cms.register_component.service'
+            - '@calculator_prime.component_calculator_prime.repository'
+
+    calculator_prime.currency.service:
+        class: Components\CalculatorBundle\Service\CurrencyService
+        arguments:
+            - '@cms.http_client.bridge'
+            - '@cms.config.service'
+
+    calculator_prime.component_calculator_prime.repository:
+        class: Components\CalculatorBundle\Repository\ComponentCalculatorPrimeRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'CalculatorBundle:ComponentCalculatorPrime'
+

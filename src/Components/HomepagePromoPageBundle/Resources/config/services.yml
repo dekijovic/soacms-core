@@ -1,0 +1,19 @@
+
+services:
+#    homepage_promo_page.example:
+#        class: HomepagePromoPageBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    homepage_promo_page.component_meta.repository:
+        class: Components\HomepagePromoPageBundle\Repository\ComponentHomepagePromopageMetaRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'HomepagePromoPageBundle:ComponentHomepagePromopageMeta'
+
+    #handlers
+    homepage_promo_page.component_homepage_promo_page.service:
+        class: Components\HomepagePromoPageBundle\Service\HomepagePromopageService
+        arguments:
+            - '@homepage_promo_page.component_meta.repository'
+            - '@cms.structure_component.repository'
+            - '@cms.register_component.service'
+            - '@cms.image_processor.service'

@@ -1,0 +1,18 @@
+services:
+#    references.example:
+#        class: Components\ReferencesBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+
+    reference.component_reference_item.repository:
+        class: Components\ReferencesBundle\Repository\ComponentReferenceItemRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'ReferencesBundle:ComponentReferenceItem'
+
+    reference.component_reference.service:
+        class: Components\ReferencesBundle\Service\ReferenceService
+        arguments:
+            - '@reference.component_reference_item.repository'
+            - "@cms.image_processor.service"
+            - '@cms.config.repository'

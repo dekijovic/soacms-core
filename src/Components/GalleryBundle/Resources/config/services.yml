@@ -1,0 +1,25 @@
+services:
+#    gallery.example:
+#        class: Components\GalleryBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    gallery.album.repository:
+        class: Components\GalleryBundle\Repository\ComponentGalleryAlbumRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'GalleryBundle:ComponentGalleryAlbum'
+
+    gallery.album_item.repository:
+        class: Components\GalleryBundle\Repository\ComponentGalleryAlbumItemRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'GalleryBundle:ComponentGalleryAlbumItem'
+
+
+    gallery.component_gallery.service:
+        class: Components\GalleryBundle\Service\GalleryService
+        arguments:
+            - '@gallery.album.repository'
+            - '@gallery.album_item.repository'
+            - '@cms.structure_component.repository'
+            - '@cms.register_component.service'
+

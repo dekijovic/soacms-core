@@ -1,0 +1,24 @@
+services:
+#    gallery.example:
+#        class: Components\GalleryBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    attachment.store.repository:
+        class: Components\AttachmentBundle\Repository\ComponentAttachmentStoreRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'AttachmentBundle:ComponentAttachmentStore'
+
+    attachment.item.repository:
+        class: Components\AttachmentBundle\Repository\ComponentAttachmentItemRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'AttachmentBundle:ComponentAttachmentItem'
+
+
+    attachment.component.service:
+        class: Components\AttachmentBundle\Service\AttachmentService
+        arguments:
+            - '@attachment.store.repository'
+            - '@attachment.item.repository'
+            - '@cms.structure_component.repository'
+            - '@cms.register_component.service'

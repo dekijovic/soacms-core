@@ -1,0 +1,2 @@
+
+1. if url is misspelled it will return not found exception, we can show suggestions for simmilar pattern strings

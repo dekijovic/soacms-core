@@ -1,0 +1,13 @@
+services:
+    content.repository:
+        class: Components\ContentBundle\Repository\ComponentContentRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'ContentBundle:ComponentContent'
+
+    content.component.service:
+        class: Components\ContentBundle\Service\ContentService
+        arguments:
+            - '@content.repository'
+            - '@cms.structure_component.repository'
+            - '@cms.register_component.service'
